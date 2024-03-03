@@ -21,7 +21,7 @@ exports.getCoWorkingSpaces=async(req,res,next)=>{
     queryStr=queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match=>`$${match}`);
 
     //finding resource
-    query=CoWorkingSpace.find(JSON.parse(queryStr)).populate(`appointments`);
+    query=CoWorkingSpace.find(JSON.parse(queryStr)).populate(`reservations`);
 
     //Select Fields
     if(req.query.select){
