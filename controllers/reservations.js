@@ -43,7 +43,7 @@ exports.getReservations = async (req, res, next) => {
 exports.getReservation = async (req, res, next) => {
     try {
         const reservation = await Reservation.findById(req.params.id).populate({
-            path: 'reservations',
+            path: 'coWorkingSpace',
             select: 'name address tel open_close_time'
         });
         if (!reservation) {
