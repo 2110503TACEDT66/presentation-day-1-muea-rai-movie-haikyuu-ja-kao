@@ -14,8 +14,8 @@ exports.getReservations = async (req, res, next) => {
         });
     } else {
         //admin can see all
-        if (req.params.reservationId) {
-            console.log(req.params.reservationId);
+        if (req.params.coWorkingSpaceId) {
+            console.log(req.params.coWorkingSpaceId);
             query = Reservation.find({reservation: req.params.reservationId}).populate({
                 path: 'coWorkingSpace',
                 select: 'name address tel open_close_time'
@@ -84,6 +84,7 @@ exports.addReservation = async (req, res, next) => {
     try { 
         req.body.coWorkingSpace = req.params.coWorkingSpaceId;
         const coWorkingSpace = await CoWorkingSpace.findById(req.params.coWorkingSpaceId);
+        console.log(coWorkingSpace);
         if (!coWorkingSpace) {
             return res.status(404).json({success: false, message: `No co-working space with the id of ${req.params.coWorkingSpaceId}`});
         }
@@ -92,9 +93,9 @@ exports.addReservation = async (req, res, next) => {
         //add user ID to req.body
         req.body.user = req.user.id;
         //check for existed appointment
-        const existedReservatioms = await Reservation.find({user: req.user.id});
+        const existedReservations = await Reservation.find({user: req.user.id});
         //if the user is not an admin, they can only create 3 appointments
-        if (existedReservatioms.length >= 3 && req.user.role != 'admin') {
+        if (existedReservations.length >= 3 && req.user.role != 'admin') {
             return res.status(400).json({success: false, message: `The user with ID ${req.user.id} has already made 3 reservations`});
         }
 
