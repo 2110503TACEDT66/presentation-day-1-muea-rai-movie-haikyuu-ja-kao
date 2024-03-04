@@ -41,22 +41,7 @@ exports.getReservations = async (req, res, next) => {
 //@route    : GET /api/v1/reservations/:id
 //@acces    : Public
 exports.getReservation = async (req, res, next) => {
-    // try {
-    //     const reservation = await Reservation.findById(req.params.id).populate({
-    //         path: 'reservations',
-    //         select: 'name address tel open_close_time'
-    //     });
-    //     if (!reservation) {
-    //         return res.status(404).json({success: false, message: `No reservation with the id of ${req.params.id}`});
-    //     }
-
-    //     res.status(200).json({success: true, data: reservation});
-    // } catch (err) {
-    //     console.log(error.stack);
-    //     return res.status(500).json({success: false, message: "Cannot find reservation"});
-    // }
-
-    try { 
+    try {
         const reservation = await Reservation.findById(req.params.id).populate({
             path: 'reservations',
             select: 'name address tel open_close_time'
@@ -65,16 +50,31 @@ exports.getReservation = async (req, res, next) => {
             return res.status(404).json({success: false, message: `No reservation with the id of ${req.params.id}`});
         }
 
-        //make sure user is the reservation owner
-        if (reservation.user.toString() !== req.user.id && req.user.role !== 'admin') {
-            return res.status(401).json({success: false, message: `User ${req.user.id} does not have a reservation with the id ${req.params.id}`});
-        }
-
         res.status(200).json({success: true, data: reservation});
     } catch (err) {
         console.log(error.stack);
         return res.status(500).json({success: false, message: "Cannot find reservation"});
     }
+
+    // try { 
+    //     const reservation = await Reservation.findById(req.params.id).populate({
+    //         path: 'reservations',
+    //         select: 'name address tel open_close_time'
+    //     });
+    //     if (!reservation) {
+    //         return res.status(404).json({success: false, message: `No reservation with the id of ${req.params.id}`});
+    //     }
+
+    //     //make sure user is the reservation owner
+    //     if (reservation.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    //         return res.status(401).json({success: false, message: `User ${req.user.id} does not have a reservation with the id ${req.params.id}`});
+    //     }
+
+    //     res.status(200).json({success: true, data: reservation});
+    // } catch (err) {
+    //     console.log(error.stack);
+    //     return res.status(500).json({success: false, message: "Cannot find reservation"});
+    // }
 };
 
 //@desc     : Add reservation
