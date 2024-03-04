@@ -3,21 +3,21 @@ const mongoose = require('mongoose');
 const CoWorkingSpaceSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: [true, 'Please add a name'],
+        required: [true, 'Please add a name'],
         unique: true,
         trim: true,
-        maxLength: [50, 'Name cannot be more than 50 characters']
+        maxLength: [100, 'Name cannot be more than 50 characters']
     },
     address: {
         type: String,
-        require: [true, 'Please add a address'],
+        required: [true, 'Please add a address'],
     },
     tel: {
         type: String,
     },
     open_close_time: {
         type: String,
-        require: [true, 'Please add a open-close time'],
+        required: [true, 'Please add a open-close time'],
     }
 }, {
     toJSON: {virtuals: true},

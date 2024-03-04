@@ -1,3 +1,5 @@
+const CoWorkingSpace = require('../models/CoWorkingSpace');
+
 //@desc Get all coWorkingSpaces
 //@route GET /api/v1/coWorkingSpace
 //@access Public
