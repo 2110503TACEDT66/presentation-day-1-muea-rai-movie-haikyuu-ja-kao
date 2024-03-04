@@ -83,6 +83,9 @@ exports.getReservation = async (req, res, next) => {
 exports.addReservation = async (req, res, next) => {
     try { 
         const coWorkingSpace = await CoWorkingSpace.findById(req.body.coWorkingSpace);
+        if (coWorkingSpace == null || req.body.user == null || req.body.resDate == null) {
+            return res.status(500).json({success: false, message: "Cannot create reservation"});
+        }
         if (!coWorkingSpace) {
             return res.status(400).json({success: false, message: `No co-working space with the id of ${req.body.coWorkingSpace}`});
         }
