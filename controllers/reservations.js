@@ -84,7 +84,7 @@ exports.addReservation = async (req, res, next) => {
     try { 
         const coWorkingSpace = await CoWorkingSpace.findById(req.body.coWorkingSpace);
         if (!coWorkingSpace) {
-            return res.status(404).json({success: false, message: `No co-working space with the id of ${req.body.coWorkingSpace}`});
+            return res.status(400).json({success: false, message: `No co-working space with the id of ${req.body.coWorkingSpace}`});
         }
         console.log(req.body);
 
